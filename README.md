@@ -1,7 +1,6 @@
 # graal.js, node, typescript and dotty
 
-Combined graal.js, node, typescript and dotty test and writing a "plugin" to @graphql-codgen for generating
-scala.js code from graphql operations.
+Combined graal.js, node, typescript and dotty test and writing a "plugin".
 
 Obviously, you must make sure you run this with graal. See the .jvmopts for parameters
 you need to use graal when bundled your jdk is bundled with graal.
@@ -18,8 +17,12 @@ Run `node --show-version:graalvm` to observe that node is running on graal.
 
 # Running
 
+- Make sure graal node is the default: `node --show-version:graalvm`
 - Install node dependencies: `npm i`
-- Run the node program driver.ts via the sbt command: `crazy`.
+  - Graal's node is slow for install npm packages.
+- Compile the typescript program: `npx tsc`
+- Force npm chalk to output terminal codes: `export FORCE_COLOR=3`
+- Run the node program driver.ts via the sbt command: `sbt crazy`.
 
 `crazy` is an alias that compiles the dotty/java sources and runs
 node. You must ensure that the graal "node" is configured to be used
@@ -32,11 +35,10 @@ class files) included and put the fatjar on the classpath.
 
 # Development
 
-Start dotty via `sbt` and using the `launchIDE` command. You code to edit your scala
-source files.
+Start dotty via `sbt` and using the `launchIDE` command.
 
 1. Run the code generator in sbt using `~crazy` which will watch all source
-   files for changes.
+   files for changes including `driver.js` the output of typescript compilation.
 2. Run the typescript compiler, tsc, in another shell or in a vs code shell to
    continuously update the typescript program.
 
@@ -45,7 +47,8 @@ npx tsc -watch
 ```
 
 You can also put all the typescript resources under src/main/js and change tsconfig.json
-to includes that directory.
+to includes that directory. Or you can add a `tsc` step to the `crazy` command and
+watch `driver.ts` but all of this is up to you.
 
 # Misc
 
