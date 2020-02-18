@@ -1,0 +1,7 @@
+dist
+target
+*.js
+.dotty*
+.metals
+node_modules
+output
